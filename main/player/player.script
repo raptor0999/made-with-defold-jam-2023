@@ -1,14 +1,24 @@
+local function update_health(self, amount)
+	self.current_health =  self.current_health - amount
+
+	msg.post("/guis#hud", "update_health", { amount = self.current_health })
+
+	if self.current_health <= 0 then
+		--die()
+	end
+end
+
+local function update_score(self, amount)
+	self.score = self.score + amount
+	msg.post("/guis#hud", "update_score", { amount = self.score })
+end
+
 local function die()
 	msg.post("#main", "reload")
 end
 
 local function take_damage(self, amount)
-	self.current_health =  self.current_health - amount
-	print(self.current_health)
-
-	if self.current_health <= 0 then
-		--die()
-	end
+	update_health(self, amount)
 end
 
 function init(self)
@@ -27,6 +37,9 @@ function init(self)
 	self.speed = 250
 	self.score = 0
 	self.current_anim = hash("player-down")
+
+	update_health(self, 0)
+	update_score(self, 0)
 end
 
 function final(self)
@@ -52,11 +65,12 @@ function update(self, dt)
 
 	local anim = hash("player-down")
 
-	if self.dir.x > 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
+	if self.dir.x > 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
 		anim = hash("player-right")
 	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
 		anim = hash("player-left")
-	elseif self.dir.y > 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
+	end
+	if self.dir.y > 0 and math.abs(self.dir.y) >= math.abs(self.dir.x) then
 		anim = hash("player-up")
 	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("player-down")
@@ -101,6 +115,11 @@ function on_message(self, message_id, message, sender)
 	-- Take damage
 	if message_id == hash("take_damage") then
 		take_damage(self, message.amount)
+	end
+
+	-- Score
+	if message_id == hash("score") then
+		update_score(self, message.amount)
 	end
 end
 

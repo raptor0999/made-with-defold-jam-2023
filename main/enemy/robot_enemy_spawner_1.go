@@ -1,6 +1,6 @@
 components {
   id: "robot_enemy_spawner"
-  component: "/main/robot_enemy_spawner.script"
+  component: "/main/enemy/robot_enemy_spawner.script"
   position {
     x: 0.0
     y: 0.0
@@ -16,7 +16,7 @@ components {
 embedded_components {
   id: "factory"
   type: "factory"
-  data: "prototype: \"/main/robot_enemy_1.go\"\n"
+  data: "prototype: \"/main/enemy/robot_enemy_1.go\"\n"
   "load_dynamically: false\n"
   "dynamic_prototype: false\n"
   ""

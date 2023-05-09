@@ -1,6 +1,6 @@
 components {
-  id: "rocket"
-  component: "/main/rocket.script"
+  id: "robot_enemy"
+  component: "/main/enemy/robot_enemy.script"
   position {
     x: 0.0
     y: 0.0
@@ -17,7 +17,7 @@ embedded_components {
   id: "sprite"
   type: "sprite"
   data: "tile_set: \"/main/sprites.atlas\"\n"
-  "default_animation: \"rocket\"\n"
+  "default_animation: \"robot-enemy-1-down\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -32,11 +32,6 @@ embedded_components {
     z: 0.0
     w: 1.0
   }
-  scale {
-    x: 3.0
-    y: 3.0
-    z: 1.0
-  }
 }
 embedded_components {
   id: "collisionobject"
@@ -46,14 +41,15 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"playerfire\"\n"
-  "mask: \"walls\"\n"
+  "group: \"enemy\"\n"
+  "mask: \"player\"\n"
+  "mask: \"playerfire\"\n"
   "mask: \"enemy\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: 4.0\n"
+  "      x: 0.0\n"
   "      y: 0.0\n"
   "      z: 0.0\n"
   "    }\n"
@@ -66,8 +62,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 16.484\n"
-  "  data: 4.8875\n"
+  "  data: 9.3895\n"
+  "  data: 50.4845\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"

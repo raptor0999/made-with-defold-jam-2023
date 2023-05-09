@@ -1,6 +1,6 @@
 components {
   id: "player"
-  component: "/main/player.script"
+  component: "/main/player/player.script"
   position {
     x: 0.0
     y: 0.0
@@ -86,7 +86,7 @@ embedded_components {
 embedded_components {
   id: "rocket_factory"
   type: "factory"
-  data: "prototype: \"/main/rocket.go\"\n"
+  data: "prototype: \"/main/player/rocket.go\"\n"
   "load_dynamically: false\n"
   "dynamic_prototype: false\n"
   ""

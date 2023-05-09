@@ -22,6 +22,10 @@ key_trigger {
   input: KEY_SPACE
   action: "fire"
 }
+mouse_trigger {
+  input: MOUSE_BUTTON_LEFT
+  action: "fire"
+}
 gamepad_trigger {
   input: GAMEPAD_LSTICK_UP
   action: "up"

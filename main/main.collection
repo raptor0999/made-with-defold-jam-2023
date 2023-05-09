@@ -1,7 +1,7 @@
 name: "main"
 instances {
   id: "player"
-  prototype: "/main/player.go"
+  prototype: "/main/player/player.go"
   children: "camera"
   position {
     x: 242.0
@@ -22,7 +22,7 @@ instances {
 }
 instances {
   id: "camera"
-  prototype: "/main/camera.go"
+  prototype: "/main/player/camera.go"
   position {
     x: 0.0
     y: 0.0
@@ -42,7 +42,7 @@ instances {
 }
 instances {
   id: "robot_enemy_spawner_1"
-  prototype: "/main/robot_enemy_spawner_1.go"
+  prototype: "/main/enemy/robot_enemy_spawner_1.go"
   position {
     x: 909.0
     y: 921.0
@@ -153,6 +153,43 @@ embedded_instances {
     x: 0.0
     y: 0.0
     z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "guis"
+  data: "components {\n"
+  "  id: \"hud\"\n"
+  "  component: \"/main/gui/hud.gui\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.1
   }
   rotation {
     x: 0.0
