@@ -2,8 +2,22 @@
 local function update_radial(self, p)
 	local node = gui.get_node("healthradial")
 	local angle = p * 360 -- full circle is 360 degrees
-	gui.animate(node, gui.PROP_FILL_ANGLE, angle, gui.EASING_LINEAR, self.radial_duration)
-	--gui.set_fill_angle(node, angle)
+	
+	-- Animate the fill angle itself
+	gui.animate(node, gui.PROP_FILL_ANGLE, angle, gui.EASING_INOUTQUAD, self.radial_duration)
+
+	-- Animate  health radial color
+	if angle > 180 then
+		gui.animate(node, gui.PROP_COLOR, vmath.vector4(0, 1, 0, 1), gui.EASING_INOUTQUAD, 0.5)
+	end
+
+	if angle <= 180 and angle > 72 then
+		gui.animate(node, gui.PROP_COLOR, vmath.vector4(1, 1, 0, 1), gui.EASING_INOUTQUAD, 0.5)
+	end
+	
+	if angle <= 72 then
+		gui.animate(node, gui.PROP_COLOR, vmath.vector4(1, 0, 0, 1), gui.EASING_INOUTQUAD, 0.5)
+	end
 end
 
 local function update_health(self, amount)
