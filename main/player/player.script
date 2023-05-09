@@ -63,7 +63,7 @@ function update(self, dt)
 		go.set("#sprite", "playback_rate", 0)
 	end
 
-	local anim = hash("player-down")
+	local anim = nil
 
 	if self.dir.x > 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
 		anim = hash("player-right")
@@ -76,7 +76,7 @@ function update(self, dt)
 		anim = hash("player-down")
 	end
 
-	if anim ~= self.current_anim then
+	if anim ~= self.current_anim and anim ~= nil then
 		msg.post("#sprite", "play_animation", { id = anim })
 		self.current_anim = anim
 	end
@@ -108,7 +108,7 @@ end
 function on_message(self, message_id, message, sender)
 	-- Handle collision
 	if message_id == hash("contact_point_response") then
-		if message.other_group ~= hash("enemy") then
+		if message.other_group ~= hash("enemy") and message.other_group ~= hash("explosion") then
 			local newpos = go.get_position() + message.normal * message.distance
 			go.set_position(newpos)
 		end

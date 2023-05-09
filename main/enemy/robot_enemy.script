@@ -1,5 +1,6 @@
 local function die(self)
 	if not self.dead then
+		msg.post("#collisionobject", "disable")
 		msg.post("/player#player", "score", { amount =  self.score_amount })
 		self.dead = true
 		go.delete()
@@ -21,7 +22,7 @@ function init(self)
 	self.dead = false
 
 	self.input = vmath.vector3()
-	self.dir = vmath.vector3(0, 1, 0)
+	self.dir = vmath.vector3(0, 0, 0)
 	self.max_health = 1
 	self.current_health = self.max_health
 	self.damage = 2
@@ -55,27 +56,8 @@ function update(self, dt)
 	
 	if dist_from_player <= 1000 then
 		self.moving = true
-
-		if player_pos.y > self_pos.y then
-			self.input.y = 1
-		end
 		
-		if player_pos.y < self_pos.y then
-			self.input.y = -1
-		end
-		
-		if player_pos.x < self_pos.x then
-			self.input.x = -1
-		end
-		
-		if player_pos.x > self_pos.x then
-			self.input.x = 1
-		end
-
-		if vmath.length(self.input) > 0 then
-			self.moving = true
-			self.dir = vmath.normalize(self.input)
-		end
+		self.dir = vmath.normalize(player_pos - self_pos)
 	end
 	
 	if self.moving then
@@ -93,19 +75,19 @@ function update(self, dt)
 		go.set("#sprite", "playback_rate", 0)
 	end
 
-	local anim = hash("robot-enemy-1-down")
+	local anim = nil
 
-	if self.dir.x > 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
+	if self.dir.x >= 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
 		anim = hash("robot-enemy-1-right")
 	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
 		anim = hash("robot-enemy-1-left")
-	elseif self.dir.y > 0 and math.abs(self.dir.y) >= math.abs(self.dir.x) then
+	elseif self.dir.y >= 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("robot-enemy-1-up")
 	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("robot-enemy-1-down")
 	end
 
-	if anim ~= self.current_anim then
+	if anim ~= self.current_anim and anim ~= nil then
 		msg.post("#sprite", "play_animation", { id = anim })
 		self.current_anim = anim
 	end
