@@ -47,8 +47,9 @@ function update(self, dt)
 		
 	local player_pos = go.get_position("/player")
 	local self_pos = go.get_position()
+	local dist_from_player = vmath.length(player_pos - self_pos)
 	
-	if vmath.length(player_pos - self_pos) <= 1000 then
+	if dist_from_player <= 1000 then
 		self.moving = true
 
 		if player_pos.y > self_pos.y then
@@ -132,6 +133,10 @@ end
 function on_message(self, message_id, message, sender)
 	-- Handle collision
 	if message_id == hash("contact_point_response") then
+		if message.other_group ~= hash("player") and message.other_group ~= hash("playerfire") then
+			local newpos = go.get_position() + message.normal * message.distance
+			go.set_position(newpos)
+		end
 		
 		if message.other_group == hash("player") and not self.attack_cooldown then
 			self.attack_cooldown = true

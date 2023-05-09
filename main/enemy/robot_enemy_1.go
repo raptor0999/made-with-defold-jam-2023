@@ -45,6 +45,7 @@ embedded_components {
   "mask: \"player\"\n"
   "mask: \"playerfire\"\n"
   "mask: \"enemy\"\n"
+  "mask: \"walls\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
