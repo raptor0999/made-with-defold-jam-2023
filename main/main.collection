@@ -1,25 +1,5 @@
 name: "main"
 instances {
-  id: "robot_enemy_1"
-  prototype: "/main/robot_enemy_1.go"
-  position {
-    x: 1059.0
-    y: 622.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
   id: "player"
   prototype: "/main/player.go"
   children: "camera"
@@ -47,6 +27,26 @@ instances {
     x: 0.0
     y: 0.0
     z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "robot_enemy_spawner_1"
+  prototype: "/main/robot_enemy_spawner_1.go"
+  position {
+    x: 909.0
+    y: 921.0
+    z: 0.0
   }
   rotation {
     x: 0.0
