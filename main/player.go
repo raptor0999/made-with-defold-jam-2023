@@ -22,6 +22,7 @@ embedded_components {
   "friction: 0.1\n"
   "restitution: 0.5\n"
   "group: \"player\"\n"
+  "mask: \"walls\"\n"
   "mask: \"floor\"\n"
   "mask: \"enemy\"\n"
   "embedded_collision_shape {\n"
