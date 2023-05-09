@@ -1,3 +1,16 @@
+local function die()
+	msg.post("#main", "reload")
+end
+
+local function take_damage(self, amount)
+	self.current_health =  self.current_health - amount
+	print(self.current_health)
+
+	if self.current_health <= 0 then
+		--die()
+	end
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post("/camera#camera", "acquire_camera_focus")
@@ -9,7 +22,10 @@ function init(self)
 	
 	self.input = vmath.vector3()
 	self.dir = vmath.vector3(0, 1, 0)
+	self.max_health = 10
+	self.current_health = self.max_health
 	self.speed = 250
+	self.score = 0
 	self.current_anim = hash("player-down")
 end
 
@@ -36,13 +52,13 @@ function update(self, dt)
 
 	local anim = hash("player-down")
 
-	if self.dir.x > 0 then
+	if self.dir.x > 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
 		anim = hash("player-right")
-	elseif self.dir.x < 0 then
+	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
 		anim = hash("player-left")
-	elseif self.dir.y > 0 then
+	elseif self.dir.y > 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("player-up")
-	elseif self.dir.y < 0 then
+	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("player-down")
 	end
 
@@ -80,6 +96,11 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		local newpos = go.get_position() + message.normal * message.distance
 		go.set_position(newpos)
+	end
+
+	-- Take damage
+	if message_id == hash("take_damage") then
+		take_damage(self, message.amount)
 	end
 end
 

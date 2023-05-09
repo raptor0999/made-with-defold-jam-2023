@@ -1,10 +1,6 @@
-go.property("dir", vmath.vector3())
-
 function init(self)
-	self.speed = 750
-	self.damage = 1
-	self.life = .5
-	self.exploding = false
+	msg.post("#main", "load")
+	msg.post(".", "acquire_input_focus")
 end
 
 function final(self)
@@ -14,22 +10,9 @@ function final(self)
 end
 
 function update(self, dt)
-	local pos = go.get_position()
-	pos = pos + self.dir * self.speed * dt
-	go.set_position(pos)
-
-	self.life = self.life - dt
-	if self.life < 0 and not self.exploding then
-		explode(self)
-	end
-end
-
-function explode(self)
-	self.exploding = true
-	self.life = 1000
-	go.set_rotation(vmath.quat())
-	self.speed = 0
-	sprite.play_flipbook("#sprite", "explosion")
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
 end
 
 function fixed_update(self, dt)
@@ -42,18 +25,20 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Handle collision
-	if message_id == hash("contact_point_response") and not self.exploding then
-		if message.other_group == hash("enemy") then
-			msg.post(message.other_id, "take_damage", { amount = self.damage })
-		end
-		
-		explode(self)
+	if message_id == hash("reload") then              -- [2]
+		msg.post("#main", "disable")
+		msg.post("#main", "final")
+		msg.post("#main", "unload")
+	end
+	
+	if message_id == hash("proxy_loaded") then              -- [2]
+		msg.post(sender, "init")
+		msg.post(sender, "enable")
 	end
 
-	-- Handle delete
-	if message_id == hash("animation_done") then
-		go.delete()
+	if message_id == hash("proxy_unloaded") then
+		msg.post("#main", "load")
+		msg.post(".", "acquire_input_focus")
 	end
 end
 
