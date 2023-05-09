@@ -1,8 +1,10 @@
 go.property("dir", vmath.vector3())
 
 function init(self)
+	msg.post("#collisionexplode", "disable")
 	self.speed = 750
 	self.damage = 1
+	self.explosion_damage = 0.05
 	self.life = .5
 	self.exploding = false
 end
@@ -25,6 +27,8 @@ function update(self, dt)
 end
 
 function explode(self)
+	msg.post("#collisionobject", "disable")
+	msg.post("#collisionexplode", "enable")
 	self.exploding = true
 	self.life = 1000
 	go.set_rotation(vmath.quat())
@@ -49,6 +53,12 @@ function on_message(self, message_id, message, sender)
 		end
 		
 		explode(self)
+	end
+
+	if message_id == hash("contact_point_response") and self.exploding then
+		if message.other_group == hash("enemy") or message.other_group == hash("player") then
+			msg.post(message.other_id, "take_damage", { amount = self.explosion_damage })
+		end
 	end
 
 	-- Handle delete

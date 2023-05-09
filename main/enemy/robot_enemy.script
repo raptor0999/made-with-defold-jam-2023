@@ -91,13 +91,13 @@ function update(self, dt)
 
 	local anim = hash("robot-enemy-1-down")
 
-	if self.dir.x > 0 then
+	if self.dir.x > 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
 		anim = hash("robot-enemy-1-right")
-	elseif self.dir.x < 0 then
+	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
 		anim = hash("robot-enemy-1-left")
-	elseif self.dir.y > 0 then
+	elseif self.dir.y > 0 and math.abs(self.dir.y) >= math.abs(self.dir.x) then
 		anim = hash("robot-enemy-1-up")
-	elseif self.dir.y < 0 then
+	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
 		anim = hash("robot-enemy-1-down")
 	end
 
