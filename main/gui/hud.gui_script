@@ -1,6 +1,15 @@
+-- update radial/circle progress by changing the fill angle
+local function update_radial(self, p)
+	local node = gui.get_node("healthradial")
+	local angle = p * 360 -- full circle is 360 degrees
+	gui.animate(node, gui.PROP_FILL_ANGLE, angle, gui.EASING_LINEAR, self.radial_duration)
+	--gui.set_fill_angle(node, angle)
+end
+
 local function update_health(self, amount)
 	local node = gui.get_node("health")
-	gui.set_text(node, "Health: " .. amount)
+	update_radial(self, amount)
+	--gui.set_text(node, "Health: " .. amount)
 end
 
 local function update_score(self, amount)
@@ -9,9 +18,7 @@ local function update_score(self, amount)
 end
 
 function init(self)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	self.radial_duration = 0.4
 end
 
 function final(self)

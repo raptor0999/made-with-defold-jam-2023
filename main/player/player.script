@@ -1,7 +1,7 @@
 local function update_health(self, amount)
 	self.current_health =  self.current_health - amount
 
-	msg.post("/guis#hud", "update_health", { amount = self.current_health })
+	msg.post("/guis#hud", "update_health", { amount = self.current_health / self.max_health })
 
 	if self.current_health <= 0 then
 		--die()
