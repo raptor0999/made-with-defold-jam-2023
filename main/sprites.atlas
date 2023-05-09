@@ -1,3 +1,7 @@
+images {
+  image: "/assets/units/circle-shadow.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 animations {
   id: "player-down"
   images {

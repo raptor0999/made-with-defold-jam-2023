@@ -1,6 +1,9 @@
 local function die(self)
-	msg.post("/player#player", "score", { amount =  self.score_amount })
-	go.delete()
+	if not self.dead then
+		msg.post("/player#player", "score", { amount =  self.score_amount })
+		self.dead = true
+		go.delete()
+	end
 end
 
 local function take_damage(self, amount)
@@ -15,6 +18,7 @@ function init(self)
 	self.moving = false
 	self.running = false
 	self.firing = false
+	self.dead = false
 
 	self.input = vmath.vector3()
 	self.dir = vmath.vector3(0, 1, 0)
