@@ -22,8 +22,9 @@ embedded_components {
   "friction: 0.1\n"
   "restitution: 0.5\n"
   "group: \"player\"\n"
-  "mask: \"walls\"\n"
   "mask: \"floor\"\n"
+  "mask: \"on_floor\"\n"
+  "mask: \"walls\"\n"
   "mask: \"enemy\"\n"
   "mask: \"explosion\"\n"
   "embedded_collision_shape {\n"
@@ -114,7 +115,7 @@ embedded_components {
   position {
     x: 1.0
     y: -43.0
-    z: 0.09
+    z: 0.1
   }
   rotation {
     x: 0.0

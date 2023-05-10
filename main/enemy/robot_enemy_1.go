@@ -13,6 +13,21 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "render_order"
+  component: "/main/util/render_order.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -47,6 +62,7 @@ embedded_components {
   "mask: \"enemy\"\n"
   "mask: \"walls\"\n"
   "mask: \"explosion\"\n"
+  "mask: \"on_floor\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -64,7 +80,7 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 14.8525\n"
+  "  data: 23.679\n"
   "  data: 50.4845\n"
   "  data: 10.0\n"
   "}\n"
@@ -96,7 +112,7 @@ embedded_components {
   position {
     x: 0.0
     y: -67.0
-    z: 0.09
+    z: 0.1
   }
   rotation {
     x: 0.0

@@ -24,7 +24,7 @@ embedded_components {
   position {
     x: 0.0
     y: 0.0
-    z: 0.1
+    z: 0.2
   }
   rotation {
     x: 0.0
@@ -47,6 +47,7 @@ embedded_components {
   "friction: 0.1\n"
   "restitution: 0.5\n"
   "group: \"playerfire\"\n"
+  "mask: \"on_floor\"\n"
   "mask: \"walls\"\n"
   "mask: \"enemy\"\n"
   "embedded_collision_shape {\n"
