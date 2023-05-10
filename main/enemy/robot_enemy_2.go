@@ -1,6 +1,21 @@
 components {
-  id: "rocket"
-  component: "/main/player/rocket.script"
+  id: "render_order"
+  component: "/main/util/render_order.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "robot_enemy_2"
+  component: "/main/enemy/robot_enemy_2.script"
   position {
     x: 0.0
     y: 0.0
@@ -17,25 +32,20 @@ embedded_components {
   id: "sprite"
   type: "sprite"
   data: "tile_set: \"/main/sprites.atlas\"\n"
-  "default_animation: \"rocket\"\n"
+  "default_animation: \"robot-enemy-2-down\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
     x: 0.0
     y: 0.0
-    z: 0.5
+    z: 0.1
   }
   rotation {
     x: 0.0
     y: 0.0
     z: 0.0
     w: 1.0
-  }
-  scale {
-    x: 3.0
-    y: 3.0
-    z: 1.0
   }
 }
 embedded_components {
@@ -46,66 +56,19 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"playerfire\"\n"
-  "mask: \"on_floor\"\n"
-  "mask: \"walls\"\n"
-  "mask: \"enemy\"\n"
-  "embedded_collision_shape {\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_BOX\n"
-  "    position {\n"
-  "      x: 4.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "      w: 1.0\n"
-  "    }\n"
-  "    index: 0\n"
-  "    count: 3\n"
-  "  }\n"
-  "  data: 16.484\n"
-  "  data: 4.8875\n"
-  "  data: 10.0\n"
-  "}\n"
-  "linear_damping: 0.0\n"
-  "angular_damping: 0.0\n"
-  "locked_rotation: false\n"
-  "bullet: false\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "collisionexplode"
-  type: "collisionobject"
-  data: "collision_shape: \"\"\n"
-  "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
-  "mass: 0.0\n"
-  "friction: 0.1\n"
-  "restitution: 0.5\n"
-  "group: \"explosion\"\n"
-  "mask: \"walls\"\n"
-  "mask: \"enemy\"\n"
+  "group: \"enemy\"\n"
   "mask: \"player\"\n"
+  "mask: \"playerfire\"\n"
+  "mask: \"enemy\"\n"
+  "mask: \"walls\"\n"
+  "mask: \"explosion\"\n"
+  "mask: \"on_floor\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: -8.0\n"
-  "      y: -22.0\n"
+  "      x: 0.0\n"
+  "      y: 0.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -117,8 +80,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 65.439\n"
-  "  data: 36.2055\n"
+  "  data: 23.679\n"
+  "  data: 50.4845\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -147,8 +110,8 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: 2.0
-    y: -31.0
+    x: 0.0
+    y: -50.0
     z: 0.09
   }
   rotation {
@@ -158,8 +121,8 @@ embedded_components {
     w: 1.0
   }
   scale {
-    x: 0.053
-    y: 0.069
+    x: 0.048
+    y: 0.109
     z: 1.0
   }
 }

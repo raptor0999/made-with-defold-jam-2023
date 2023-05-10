@@ -23,15 +23,15 @@ function init(self)
 
 	self.input = vmath.vector3()
 	self.dir = vmath.vector3(0, 0, 0)
-	self.max_health = 1
+	self.max_health = 2
 	self.current_health = self.max_health
-	self.damage = 2
-	self.score_amount = 100
+	self.damage = 1
+	self.score_amount = 200
 	self.attack_cooldown = false
 	self.attack_cooldown_time = 1.0
 	self.current_cooldown_time = self.attack_cooldown_time
-	self.speed = 100
-	self.current_anim = hash("robot-enemy-1-down")
+	self.speed = 200
+	self.current_anim = hash("robot-enemy-2-down")
 end
 
 function final(self)
@@ -78,13 +78,13 @@ function update(self, dt)
 	local anim = nil
 
 	if self.dir.x >= 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
-		anim = hash("robot-enemy-1-right")
+		anim = hash("robot-enemy-2-right")
 	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
-		anim = hash("robot-enemy-1-left")
+		anim = hash("robot-enemy-2-left")
 	elseif self.dir.y >= 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
-		anim = hash("robot-enemy-1-up")
+		anim = hash("robot-enemy-2-up")
 	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
-		anim = hash("robot-enemy-1-down")
+		anim = hash("robot-enemy-2-down")
 	end
 
 	if anim ~= self.current_anim and anim ~= nil then
