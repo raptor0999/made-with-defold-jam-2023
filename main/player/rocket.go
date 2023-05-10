@@ -138,3 +138,28 @@ embedded_components {
     w: 1.0
   }
 }
+embedded_components {
+  id: "sprite1"
+  type: "sprite"
+  data: "tile_set: \"/main/sprites.atlas\"\n"
+  "default_animation: \"circle-shadow\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  ""
+  position {
+    x: 2.0
+    y: -31.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.053
+    y: 0.069
+    z: 1.0
+  }
+}

@@ -5,7 +5,7 @@ function init(self)
 	self.speed = 750
 	self.damage = 1
 	self.explosion_damage = 0.05
-	self.life = .5
+	self.life = 0.5
 	self.exploding = false
 end
 
