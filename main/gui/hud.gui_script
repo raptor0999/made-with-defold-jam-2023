@@ -31,9 +31,40 @@ local function update_score(self, amount)
 	gui.set_text(node, "Score: " .. amount)
 end
 
-local function update_xpBar(self, amount)
-	local node = gui.get_node("xp_bar")
-	--gui.size = (node, "Score: " .. amount)
+local function update_xpBar(self, xp, total)
+
+	local xpBar_node = gui.get_node("xp_bar")
+	local size = gui.get_size(xpBar_node)
+	local newAmount = (xp/total)*100
+	size.x = newAmount
+	gui.set_size(xpBar_node, size)
+
+end
+
+function on_message(self, message_id, message, sender)
+
+	-- level
+	if message_id == hash("update_level") then
+		--update_xpBar(self, message.xp, message.total)
+		local node = gui.get_node("level")
+		gui.set_text(node, "Lvl " .. message.level)
+	end
+	
+	-- xp
+	if message_id == hash("update_xp") then
+		update_xpBar(self, message.xp, message.total)
+	end
+	
+	-- Health
+	if message_id == hash("update_health") then
+		update_health(self, message.amount)
+	end
+
+	-- Score
+	if message_id == hash("update_score") then
+		update_score(self, message.amount)
+	end
+	
 end
 
 function init(self)
@@ -50,18 +81,6 @@ function update(self, dt)
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
-end
-
-function on_message(self, message_id, message, sender)
-	-- Health
-	if message_id == hash("update_health") then
-		update_health(self, message.amount)
-	end
-
-	-- Score
-	if message_id == hash("update_score") then
-		update_score(self, message.amount)
-	end
 end
 
 function on_input(self, action_id, action)

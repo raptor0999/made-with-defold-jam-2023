@@ -1,0 +1,41 @@
+
+
+
+function init(self)
+	-- player starts the game at level 1
+	self.currentLevel = 1 --holds current player level
+	self.currentXp = 0--current player xp, gets reset to 0 at every level up
+	self.xpNeeded = 1000--xp needed to reach next level
+	self.xpMultiplier = 2--at each level up, xpNeeded is multiplied by this number
+
+end
+
+function Level_up(self)
+	self.currentXp = 0
+	self.xpNeeded = self.xpNeeded * self.xpMultiplier
+	self.currentLevel = self.currentLevel + 1
+
+	--tell the gui to update level label
+	msg.post("/guis#hud", "update_level", {level = self.currentLevel} )
+
+end
+
+function on_message(self, message_id, message, sender)
+	
+	if message_id == hash("enemy_update_xp") then
+
+		--add xp
+		self.currentXp = self.currentXp + message.xp
+
+		--check if level up is needed
+		if self.currentXp >= self.xpNeeded then
+			Level_up(self)
+		end
+		
+		--tell the gui script to update xp progress bar
+		msg.post("/guis#hud", "update_xp", { xp = self.currentXp, total = self.xpNeeded})
+		
+	end
+	
+end
+

@@ -197,7 +197,7 @@ nodes {
 nodes {
   position {
     x: 42.0
-    y: 757.0
+    y: 770.0
     z: 0.0
     w: 1.0
   }
@@ -209,7 +209,7 @@ nodes {
   }
   scale {
     x: 6.0
-    y: 0.633
+    y: 0.396
     z: 1.0
     w: 1.0
   }
@@ -232,7 +232,7 @@ nodes {
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
-  adjust_mode: ADJUST_MODE_FIT
+  adjust_mode: ADJUST_MODE_STRETCH
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -254,7 +254,7 @@ nodes {
 nodes {
   position {
     x: 49.0
-    y: 757.0
+    y: 770.0
     z: 0.0
     w: 1.0
   }
@@ -265,13 +265,13 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 2.975
-    y: 0.5
+    x: 11.9
+    y: 0.313
     z: 1.0
     w: 1.0
   }
   size {
-    x: 400.0
+    x: 0.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -289,7 +289,7 @@ nodes {
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
-  adjust_mode: ADJUST_MODE_FIT
+  adjust_mode: ADJUST_MODE_STRETCH
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -301,7 +301,7 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 1.0
+  alpha: 0.7
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
@@ -311,7 +311,7 @@ nodes {
 nodes {
   position {
     x: 130.0
-    y: 755.0
+    y: 769.0
     z: 0.0
     w: 1.0
   }
@@ -341,7 +341,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Lvl 0"
+  text: "Lvl 1"
   font: "system_font"
   id: "level"
   xanchor: XANCHOR_NONE

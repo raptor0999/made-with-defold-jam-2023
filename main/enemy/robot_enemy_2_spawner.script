@@ -1,7 +1,7 @@
 function init(self)
 	self.dir = vmath.vector3(0, 0, 0)
 	self.counter = 0
-
+	
 	spawn(self)
 	
 	timer.delay(3, true, call_every_second)
