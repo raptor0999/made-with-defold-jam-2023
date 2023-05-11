@@ -1,3 +1,8 @@
+local function blink(self)
+	self.invuln = true
+	go.animate("#sprite", "tint", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(1, 0, 0, 1), go.EASING_LINEAR, self.invuln_cooldown_time, 0, function(self) self.invuln = false end)
+end
+
 local function update_health(self, amount)
 	self.current_health =  self.current_health - amount
 
@@ -18,7 +23,10 @@ local function die()
 end
 
 local function take_damage(self, amount)
-	update_health(self, amount)
+	if not self.invuln then
+		update_health(self, amount)
+		blink(self)
+	end
 end
 
 function init(self)
@@ -29,6 +37,7 @@ function init(self)
 	self.moving = false
 	self.running = false
 	self.firing = false
+	self.invuln = false
 	
 	self.input = vmath.vector3()
 	self.dir = vmath.vector3(0, 1, 0)
@@ -37,8 +46,11 @@ function init(self)
 	self.speed = 250
 	self.score = 0
 	self.attack_cooldown = false
-	self.attack_cooldown_time = 1.0
+	self.attack_cooldown_time = 0.3
 	self.current_cooldown_time = self.attack_cooldown_time
+
+	self.invuln_cooldown_time = 1.0
+	
 	self.current_anim = hash("player-down")
 
 	update_health(self, 0)
@@ -98,7 +110,7 @@ function update(self, dt)
 		local rot = vmath.quat_rotation_z(angle)
 		local props = { dir = self.dir }
 		
-		factory.create("#rocket_factory", nil, rot, props)
+		factory.create("#laser_factory", nil, rot, props)
 	end
 
 	self.input.x = 0

@@ -1,22 +1,13 @@
 go.property("dir", vmath.vector3())
 
-local function explode(self)
-	msg.post("#collisionobject", "disable")
-	msg.post("#collisionexplode", "enable")
-	self.exploding = true
-	self.life = 1000
-	go.set_rotation(vmath.quat())
-	self.speed = 0
-	sprite.play_flipbook("#sprite", "explosion")
+local function die()
+	go.delete()
 end
 
 function init(self)
-	msg.post("#collisionexplode", "disable")
-	self.speed = 750
+	self.speed = 1000
 	self.damage = 1
-	self.explosion_damage = 0.05
 	self.life = 0.5
-	self.exploding = false
 end
 
 function final(self)
@@ -31,8 +22,8 @@ function update(self, dt)
 	go.set_position(pos)
 
 	self.life = self.life - dt
-	if self.life < 0 and not self.exploding then
-		explode(self)
+	if self.life < 0 then
+		die()
 	end
 end
 
@@ -52,18 +43,7 @@ function on_message(self, message_id, message, sender)
 			msg.post(message.other_id, "take_damage", { amount = self.damage })
 		end
 		
-		explode(self)
-	end
-
-	if message_id == hash("contact_point_response") and self.exploding then
-		if message.other_group == hash("enemy") or message.other_group == hash("player") then
-			msg.post(message.other_id, "take_damage", { amount = self.explosion_damage })
-		end
-	end
-
-	-- Handle delete
-	if message_id == hash("animation_done") then
-		go.delete()
+		die()
 	end
 end
 
