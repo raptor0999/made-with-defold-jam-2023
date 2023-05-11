@@ -54,6 +54,17 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("update_xp") then
 		update_xpBar(self, message.xp, message.total)
 	end
+
+	-- pause
+	if message_id == hash("pause_game") then
+		local node = gui.get_node("pause")
+		gui.set_visible(node, true)
+	end
+	--unpause
+	if message_id == hash("unpause_game") then
+		local node = gui.get_node("pause")
+		gui.set_visible(node, false)
+	end
 	
 	-- Health
 	if message_id == hash("update_health") then

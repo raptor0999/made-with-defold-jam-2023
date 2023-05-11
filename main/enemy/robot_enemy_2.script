@@ -9,7 +9,7 @@ local function die(self)
 		self.dead = true
 
 		--send message to xp_manager
-		msg.post("/xp_manager", "enemy_update_xp", { xp =  self.xpWorth })
+		msg.post("Systems#xp_manager", "enemy_update_xp", { xp =  self.xpWorth })
 		
 		go.delete()
 	end
@@ -54,6 +54,9 @@ function final(self)
 end
 
 function update(self, dt)
+
+	if _G.pause then return end
+	
 	if self.attack_cooldown then
 		self.current_cooldown_time = self.current_cooldown_time - dt
 
