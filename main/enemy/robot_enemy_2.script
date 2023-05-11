@@ -1,3 +1,7 @@
+local function blink(self)
+	go.animate("#sprite", "tint", go.PLAYBACK_ONCE_PINGPONG, vmath.vector4(1, 0, 0, 1), go.EASING_LINEAR, self.blink_cooldown_time, 0, function(self) self.invuln = false end)
+end
+
 local function die(self)
 	if not self.dead then
 		msg.post("#collisionobject", "disable")
@@ -13,6 +17,8 @@ end
 
 local function take_damage(self, amount)
 	self.current_health =  self.current_health - amount
+
+	blink(self)
 
 	if self.current_health <= 0 then
 		die(self)
@@ -36,6 +42,7 @@ function init(self)
 	self.attack_cooldown = false
 	self.attack_cooldown_time = 1.0
 	self.current_cooldown_time = self.attack_cooldown_time
+	self.blink_cooldown_time = 0.3
 	self.speed = 200
 	self.current_anim = hash("robot-enemy-2-down")
 end
