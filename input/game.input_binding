@@ -42,6 +42,10 @@ key_trigger {
   input: KEY_P
   action: "pause"
 }
+key_trigger {
+  input: KEY_R
+  action: "restart"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "fire"

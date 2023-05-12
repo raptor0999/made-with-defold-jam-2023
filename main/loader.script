@@ -1,5 +1,4 @@
 function init(self)
-	msg.post("#main", "load")
 	msg.post(".", "acquire_input_focus")
 end
 
@@ -25,10 +24,11 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("reload") then              -- [2]
-		msg.post("#main", "disable")
-		msg.post("#main", "final")
-		msg.post("#main", "unload")
+	if message_id == hash("restart") then              -- [2]
+		print("restart")
+		msg.post(".", "disable")
+		msg.post(".", "final")
+		msg.post(".", "unload")
 	end
 	
 	if message_id == hash("proxy_loaded") then              -- [2]
@@ -37,7 +37,7 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("proxy_unloaded") then
-		msg.post("#main", "load")
+		msg.post(".", "load")
 		msg.post(".", "acquire_input_focus")
 	end
 end
