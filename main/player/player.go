@@ -22,11 +22,13 @@ embedded_components {
   "friction: 0.1\n"
   "restitution: 0.5\n"
   "group: \"player\"\n"
-  "mask: \"floor\"\n"
-  "mask: \"on_floor\"\n"
+  "mask: \"building\"\n"
   "mask: \"walls\"\n"
   "mask: \"enemy\"\n"
   "mask: \"explosion\"\n"
+  "mask: \"objects1\"\n"
+  "mask: \"objects2\"\n"
+  "mask: \"water\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -45,7 +47,7 @@ embedded_components {
   "    count: 3\n"
   "  }\n"
   "  data: 11.037\n"
-  "  data: 10.0465\n"
+  "  data: 20.137\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -76,7 +78,7 @@ embedded_components {
   position {
     x: 0.0
     y: 0.0
-    z: 0.1
+    z: 6.0E-4
   }
   rotation {
     x: 0.0
@@ -115,7 +117,7 @@ embedded_components {
   position {
     x: 1.0
     y: -43.0
-    z: 0.1
+    z: 6.0E-4
   }
   rotation {
     x: 0.0

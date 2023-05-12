@@ -39,7 +39,7 @@ embedded_components {
   position {
     x: 0.0
     y: 0.0
-    z: 0.1
+    z: 6.0E-4
   }
   rotation {
     x: 0.0
@@ -60,9 +60,11 @@ embedded_components {
   "mask: \"player\"\n"
   "mask: \"playerfire\"\n"
   "mask: \"enemy\"\n"
+  "mask: \"building\"\n"
   "mask: \"walls\"\n"
   "mask: \"explosion\"\n"
-  "mask: \"on_floor\"\n"
+  "mask: \"objects1\"\n"
+  "mask: \"objects2\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -112,7 +114,7 @@ embedded_components {
   position {
     x: 0.0
     y: -50.0
-    z: 0.09
+    z: 6.0E-4
   }
   rotation {
     x: 0.0
