@@ -1,8 +1,15 @@
+local function spawn(self)
+	local angle = math.atan2(self.dir.y, self.dir.x)
+	local rot = vmath.quat_rotation_z(angle)
+	local props = { dir = self.dir }
+
+	factory.create("#factory", nil, rot, props)
+end
+
 function init(self)
-	print("init map")
-	--msg.post("#cityproxy", "async_load")
-	collectionfactory.create("#collectionfactory")
-	sound.play("#music", { gain = 1.0, pan = 0 })
+	self.dir = vmath.vector3(0, 0, 0)
+	
+	spawn(self)
 end
 
 function final(self)
@@ -27,15 +34,9 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("sound_done") then
-		print("ok")
-	end
-
-	if message_id == hash("proxy_loaded") then
-		self.current_proxy = sender
-		print("proxy: " .. self.current_proxy)
-		msg.post(sender, "enable")
-	end
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
 end
 
 function on_input(self, action_id, action)
