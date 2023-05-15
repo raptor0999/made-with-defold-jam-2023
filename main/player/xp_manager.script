@@ -6,7 +6,7 @@ function init(self)
 	self.currentLevel = 1 --holds current player level
 	self.currentXp = 0--current player xp, gets reset to 0 at every level up
 	self.xpNeeded = 1000--xp needed to reach next level
-	self.xpMultiplier = 2--at each level up, xpNeeded is multiplied by this number
+	self.xpMultiplier = 1.5--at each level up, xpNeeded is multiplied by this number
 
 end
 

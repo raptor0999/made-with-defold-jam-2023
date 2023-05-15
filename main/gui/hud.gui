@@ -84,8 +84,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1147.0
-    y: 670.0
+    x: 1181.0
+    y: 67.0
     z: 0.0
     w: 1.0
   }
@@ -115,7 +115,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Sample sample"
+  text: "Score"
   font: "scifi16"
   id: "score"
   xanchor: XANCHOR_NONE

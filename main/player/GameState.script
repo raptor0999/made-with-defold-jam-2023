@@ -1,6 +1,6 @@
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	_G.pause = false
+	self.paused = false
 end
 
 function final(self)
@@ -31,15 +31,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash("pause") and action.pressed then
-		if _G.pause == true then
-			_G.pause = false
-			msg.post("/guis#hud", "unpause_game")
-		else
-			_G.pause = true
-			msg.post("/guis#hud", "pause_game")
-		end
-	end
+	
 end
 
 function on_reload(self)

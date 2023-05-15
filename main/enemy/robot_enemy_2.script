@@ -31,7 +31,7 @@ function init(self)
 	self.firing = false
 	self.dead = false
 
-	self.xpWorth = 100--how much xp the player gains when killing this enemy
+	self.xpWorth = 200--how much xp the player gains when killing this enemy
 		
 	self.input = vmath.vector3()
 	self.dir = vmath.vector3(0, 0, 0)

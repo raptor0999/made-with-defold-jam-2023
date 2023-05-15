@@ -238,12 +238,12 @@ convex_hulls {
 convex_hulls {
   index: 184
   count: 4
-  collision_group: ""
+  collision_group: "building"
 }
 convex_hulls {
   index: 188
   count: 4
-  collision_group: ""
+  collision_group: "building"
 }
 convex_hulls {
   index: 192
@@ -318,12 +318,12 @@ convex_hulls {
 convex_hulls {
   index: 248
   count: 4
-  collision_group: ""
+  collision_group: "building"
 }
 convex_hulls {
   index: 252
   count: 4
-  collision_group: ""
+  collision_group: "building"
 }
 convex_hulls {
   index: 256
