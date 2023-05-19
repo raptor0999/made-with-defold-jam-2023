@@ -24,7 +24,7 @@ local function reset_player(self)
 end
 
 local function die(self)
-	sound.play("#player-die", { gain = 1.0, pan = 0 })
+	sound.play("/sound#player-die", { gain = 1.0, pan = 0 })
 	
 	--msg.post("#main", "reload")
 	go.set_position(vmath.vector3(572, 614, 0))

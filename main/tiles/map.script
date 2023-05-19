@@ -2,7 +2,7 @@ function init(self)
 	print("init map")
 	--msg.post("#cityproxy", "async_load")
 	collectionfactory.create("#collectionfactory")
-	sound.play("#music", { gain = 1.0, pan = 0 })
+	sound.play("#music", { gain = 0.5, pan = 0 })
 end
 
 function final(self)
