@@ -24,6 +24,8 @@ local function reset_player(self)
 end
 
 local function die(self)
+	sound.play("#player-die", { gain = 1.0, pan = 0 })
+	
 	--msg.post("#main", "reload")
 	go.set_position(vmath.vector3(572, 614, 0))
 
@@ -37,6 +39,13 @@ function update_health(self, amount)
 
 	if self.current_health <= 0 then
 		die(self)
+		return
+	end
+
+	if amount < 2 then
+		sound.play("#player-hit", { gain = 1.0, pan = 0 })
+	else
+		sound.play("#player-hurt", { gain = 1.0, pan = 0 })
 	end
 end
 
