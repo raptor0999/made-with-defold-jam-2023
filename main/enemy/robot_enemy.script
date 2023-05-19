@@ -44,6 +44,7 @@ function init(self)
 	self.current_cooldown_time = self.attack_cooldown_time
 	self.blink_cooldown_time = 0.3
 	self.speed = 100
+	self.player_dist_activate = 1000
 	self.current_anim = hash("robot-enemy-1-down")
 end
 
@@ -70,7 +71,7 @@ function update(self, dt)
 	local self_pos = go.get_position()
 	local dist_from_player = vmath.length(player_pos - self_pos)
 	
-	if dist_from_player <= 1000 then
+	if dist_from_player <= self.player_dist_activate then
 		self.moving = true
 		
 		self.dir = vmath.normalize(player_pos - self_pos)

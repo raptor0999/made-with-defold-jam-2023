@@ -1,5 +1,15 @@
-local function blink(self)
-	go.animate("#sprite", "tint", go.PLAYBACK_ONCE_PINGPONG, vmath.vector4(1, 0, 0, 1), go.EASING_LINEAR, self.blink_cooldown_time, 0, function(self) self.invuln = false end)
+local function explode(self)
+	msg.post("#collisionobject", "disable")
+	msg.post("#collisionexplode", "enable")
+	self.exploding = true
+	self.speed = 0
+	go.set_rotation(vmath.quat())
+	
+	sprite.play_flipbook("#sprite", "explosion")
+end
+
+local function blink(self, time, color)
+	go.animate("#sprite", "tint", go.PLAYBACK_LOOP_PINGPONG, color, go.EASING_LINEAR, time)
 end
 
 local function die(self)
@@ -18,18 +28,30 @@ end
 local function take_damage(self, amount)
 	self.current_health =  self.current_health - amount
 
-	blink(self)
+	if not self.det_inited then
+		blink(self, self.blink_cooldown_time, vmath.vector4(1, 0, 0, 1))
+	end
 
 	if self.current_health <= 0 then
 		die(self)
 	end
 end
 
+local function init_det(self)
+	self.det_inited = true
+	self.current_det_init_time = self.det_init_time
+	
+	blink(self, self.current_det_init_time, vmath.vector4(1, 1, 0, 1))
+end
+
 function init(self)
+	msg.post("#collisionexplode", "disable")
 	self.moving = false
 	self.running = false
 	self.firing = false
 	self.dead = false
+	self.det_inited = false
+	self.exploding = false
 
 	self.xpWorth = 200--how much xp the player gains when killing this enemy
 		
@@ -44,6 +66,10 @@ function init(self)
 	self.current_cooldown_time = self.attack_cooldown_time
 	self.blink_cooldown_time = 0.3
 	self.speed = 200
+	self.player_dist_activate = 1000
+	self.det_init_dist = 200
+	self.det_init_time = 2.0
+	self.current_det_init_time = self.det_init_time
 	self.current_anim = hash("robot-enemy-2-down")
 end
 
@@ -56,6 +82,8 @@ end
 function update(self, dt)
 
 	if _G.pause then return end
+
+	if self.exploding then return end
 	
 	if self.attack_cooldown then
 		self.current_cooldown_time = self.current_cooldown_time - dt
@@ -65,15 +93,27 @@ function update(self, dt)
 			self.current_cooldown_time = self.attack_cooldown_time
 		end
 	end
+
+	if self.det_inited then
+		self.current_det_init_time = self.current_det_init_time - dt
+
+		if self.current_det_init_time <= 0.0 then
+			explode(self)
+		end
+	end
 		
 	local player_pos = go.get_position("/player")
 	local self_pos = go.get_position()
 	local dist_from_player = vmath.length(player_pos - self_pos)
 	
-	if dist_from_player <= 1000 then
+	if dist_from_player <= self.player_dist_activate then
 		self.moving = true
 		
 		self.dir = vmath.normalize(player_pos - self_pos)
+	end
+
+	if dist_from_player <= self.det_init_dist and not self.det_inited then
+		init_det(self)
 	end
 	
 	if self.moving then
@@ -87,25 +127,27 @@ function update(self, dt)
 		
 		self_pos = self_pos + self.dir * self.speed * dt
 		go.set_position(self_pos)
-	else
+	elseif not self.det_inited then
 		go.set("#sprite", "playback_rate", 0)
 	end
 
-	local anim = nil
+	if not self.det_inited then
+		local anim = nil
 
-	if self.dir.x >= 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
-		anim = hash("robot-enemy-2-right")
-	elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
-		anim = hash("robot-enemy-2-left")
-	elseif self.dir.y >= 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
-		anim = hash("robot-enemy-2-up")
-	elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
-		anim = hash("robot-enemy-2-down")
-	end
+		if self.dir.x >= 0 and math.abs(self.dir.x) >= math.abs(self.dir.y) then
+			anim = hash("robot-enemy-2-right")
+		elseif self.dir.x < 0 and math.abs(self.dir.x) > math.abs(self.dir.y) then
+			anim = hash("robot-enemy-2-left")
+		elseif self.dir.y >= 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
+			anim = hash("robot-enemy-2-up")
+		elseif self.dir.y < 0 and math.abs(self.dir.y) > math.abs(self.dir.x) then
+			anim = hash("robot-enemy-2-down")
+		end
 
-	if anim ~= self.current_anim and anim ~= nil then
-		msg.post("#sprite", "play_animation", { id = anim })
-		self.current_anim = anim
+		if anim ~= self.current_anim and anim ~= nil then
+			msg.post("#sprite", "play_animation", { id = anim })
+			self.current_anim = anim
+		end
 	end
 
 	if self.firing then
@@ -149,6 +191,11 @@ function on_message(self, message_id, message, sender)
 	-- Take damage
 	if message_id == hash("take_damage") then
 		take_damage(self, message.amount)
+	end
+
+	-- Handle delete
+	if message_id == hash("animation_done") and self.exploding then
+		go.delete()
 	end
 end
 

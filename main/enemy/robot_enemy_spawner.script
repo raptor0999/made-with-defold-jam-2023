@@ -1,3 +1,23 @@
+local function spawn(self)
+	local lx,ly = window.get_size()
+	
+	local angle = math.atan2(self.dir.y, self.dir.x)
+	local rot = vmath.quat_rotation_z(angle)
+	local props = { dir = self.dir }
+
+	factory.create("#factory", nil, rot, props)
+end
+
+local function call_every_second(self, handle, time_elapsed)
+	self.counter = self.counter + 1
+
+	if self.counter == 10 then
+		timer.cancel(handle) -- cancel timer after 100 calls
+	end
+
+	spawn(self)
+end
+
 function init(self)
 	self.dir = vmath.vector3(0, 0, 0)
 	self.counter = 0
@@ -52,20 +72,5 @@ function on_reload(self)
 	-- Remove this function if not needed
 end
 
-function call_every_second(self, handle, time_elapsed)
-	self.counter = self.counter + 1
 
-	if self.counter == 10 then
-		timer.cancel(handle) -- cancel timer after 100 calls
-	end
 
-	spawn(self)
-end
-
-function spawn(self)
-	local angle = math.atan2(self.dir.y, self.dir.x)
-	local rot = vmath.quat_rotation_z(angle)
-	local props = { dir = self.dir }
-
-	factory.create("#factory", nil, rot, props)
-end
