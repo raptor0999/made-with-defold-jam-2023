@@ -88,9 +88,9 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "rocket_factory"
+  id: "weapon_factory"
   type: "factory"
-  data: "prototype: \"/main/player/rocket.go\"\n"
+  data: "prototype: \"/main/player/laser.go\"\n"
   "load_dynamically: false\n"
   "dynamic_prototype: false\n"
   ""
@@ -129,25 +129,6 @@ embedded_components {
     x: 0.045
     y: 0.063
     z: 1.0
-  }
-}
-embedded_components {
-  id: "laser_factory"
-  type: "factory"
-  data: "prototype: \"/main/player/laser.go\"\n"
-  "load_dynamically: false\n"
-  "dynamic_prototype: false\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
 }
 embedded_components {

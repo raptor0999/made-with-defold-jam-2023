@@ -1,4 +1,7 @@
 go.property("dir", vmath.vector3())
+go.property("speed_multiplier", 1.0)
+go.property("damage_multiplier", 1.0)
+go.property("life_multiplier", 1.0)
 
 local function die()
 	go.delete()
@@ -6,8 +9,13 @@ end
 
 function init(self)
 	self.speed = 1000
+	self.speed = self.speed * self.speed_multiplier
+	
 	self.damage = 1
+	self.damage = self.damage * self.damage_multiplier
+	
 	self.life = 0.5
+	self.life = self.life * self.life_multiplier
 
 	sound.play("#sound", { gain = 1.0, pan = 0 })
 end

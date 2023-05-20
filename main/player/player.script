@@ -15,6 +15,10 @@ local function reset_player(self)
 
 	self.invuln_cooldown_time = 1.0
 
+	self.weapon_speed_multiplier = 1.0
+	self.weapon_damage_multiplier = 1.0
+	self.weapon_life_multiplier = 2.0
+
 	self.current_anim = hash("player-down")
 
 	self.paused = false
@@ -129,9 +133,11 @@ function update(self, dt)
 	if self.firing then
 		local angle = math.atan2(self.dir.y, self.dir.x)
 		local rot = vmath.quat_rotation_z(angle)
-		local props = { dir = self.dir }
+		local props = { dir = self.dir, speed_multiplier =  self.weapon_speed_multiplier,
+		damage_multiplier =  self.weapon_damage_multiplier,
+		life_multiplier =  self.weapon_life_multiplier}
 		
-		factory.create("#laser_factory", nil, rot, props)
+		factory.create("#weapon_factory", nil, rot, props)
 	end
 
 	self.input.x = 0
