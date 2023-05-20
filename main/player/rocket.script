@@ -1,4 +1,7 @@
 go.property("dir", vmath.vector3())
+go.property("speed_multiplier", 1.0)
+go.property("damage_multiplier", 1.0)
+go.property("life_multiplier", 1.0)
 
 local function explode(self)
 	msg.post("#collisionobject", "disable")
@@ -12,10 +15,18 @@ end
 
 function init(self)
 	msg.post("#collisionexplode", "disable")
+
 	self.speed = 750
+	self.speed = self.speed * self.speed_multiplier
+
 	self.damage = 1
-	self.explosion_damage = 0.05
+	self.damage = self.damage * self.damage_multiplier
+
 	self.life = 0.5
+	self.life = self.life * self.life_multiplier
+	
+	self.explosion_damage = 0.05
+	
 	self.exploding = false
 end
 
