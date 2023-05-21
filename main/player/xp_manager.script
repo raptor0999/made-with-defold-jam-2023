@@ -23,7 +23,6 @@ end
 function on_message(self, message_id, message, sender)
 	
 	if message_id == hash("enemy_update_xp") then
-
 		--add xp
 		self.currentXp = self.currentXp + message.xp
 
@@ -34,7 +33,11 @@ function on_message(self, message_id, message, sender)
 		
 		--tell the gui script to update xp progress bar
 		msg.post("/guis#hud", "update_xp", { xp = self.currentXp, total = self.xpNeeded})
-		
+	end
+
+	if message_id == hash("player_update_stamina") then
+		print("stam: " .. message.amount .. message.total)
+		msg.post("/guis#hud", "update_stamina", { amount = message.amount, total = message.total })
 	end
 	
 end

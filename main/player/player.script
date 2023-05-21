@@ -12,6 +12,7 @@ local function reset_player(self)
 	self.dir = vmath.vector3(0, 1, 0)
 
 	self.current_health = self.max_health
+	self.current_stamina = self.max_stamina
 
 	self.attack_cooldown = false
 	self.attack_cooldown_time = 0.3
@@ -33,6 +34,7 @@ local function reset_player(self)
 
 	update_health(self, 0)
 	update_score(self, 0)
+	update_stamina(self, 0)
 end
 
 local function die(self)
@@ -65,6 +67,23 @@ end
 function update_score(self, amount)
 	self.score = self.score + amount
 	msg.post("/guis#hud", "update_score", { amount = self.score })
+end
+
+function update_stamina(self, amount)
+	self.current_stamina = self.current_stamina + amount
+
+	if self.current_stamina <= 0 then
+		self.running = false
+		return
+	end
+
+	if self.current_stamina > self.max_stamina then
+		self.current_stamina = self.max_stamina
+		return
+	end
+
+	--send message to manager
+	msg.post("Systems#xp_manager", "player_update_stamina", { amount = self.current_stamina, total = self.max_stamina })
 end
 
 local function blink(self)
@@ -111,9 +130,15 @@ function update(self, dt)
 		if self.running then 
 			self.speed = 350 * self.speed_multiplier
 			go.set("#sprite", "playback_rate", 1.5)
-		else
+
+			update_stamina(self, -dt*15)
+		end
+
+		if not self.running then
 			self.speed = 250 * self.speed_multiplier
 			go.set("#sprite", "playback_rate", 1)
+
+			update_stamina(self, dt*15)
 		end
 		
 		local pos = go.get_position()

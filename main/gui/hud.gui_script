@@ -41,6 +41,14 @@ local function update_xpBar(self, xp, total)
 
 end
 
+local function update_stamina_bar(self, amount, total)
+	local stamina_bar_node = gui.get_node("stamina_bar")
+	local size = gui.get_size(stamina_bar_node)
+	local newAmount = (amount/total)*100
+	size.x = newAmount
+	gui.set_size(stamina_bar_node, size)
+end
+
 function on_message(self, message_id, message, sender)
 
 	-- level
@@ -53,6 +61,12 @@ function on_message(self, message_id, message, sender)
 	-- xp
 	if message_id == hash("update_xp") then
 		update_xpBar(self, message.xp, message.total)
+	end
+
+	-- stamina
+	if message_id == hash("update_stamina") then
+		print("stam: " .. message.amount .. message.total)
+		update_stamina_bar(self, message.amount, message.total)
 	end
 
 	-- pause
