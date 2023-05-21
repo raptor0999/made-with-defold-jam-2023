@@ -1,3 +1,7 @@
+go.property("speed_multiplier", 1.0)
+go.property("damage_multiplier", 1.0)
+go.property("life_multiplier", 1.0)
+
 local function reset_player(self)
 	self.moving = false
 	self.running = false
@@ -15,9 +19,13 @@ local function reset_player(self)
 
 	self.invuln_cooldown_time = 1.0
 
+	self.speed_multiplier = 1.0
+	self.damage_multiplier = 1.0
+	self.life_multiplier = 1.0
+
 	self.weapon_speed_multiplier = 1.0
 	self.weapon_damage_multiplier = 1.0
-	self.weapon_life_multiplier = 2.0
+	self.weapon_life_multiplier = 1.0
 
 	self.current_anim = hash("player-down")
 
@@ -38,6 +46,7 @@ end
 
 function update_health(self, amount)
 	self.current_health =  self.current_health - amount
+	self.max_health = self.base_health * self.life_multiplier
 
 	msg.post("/guis#hud", "update_health", { amount = self.current_health / self.max_health })
 
@@ -75,7 +84,9 @@ function init(self)
 	msg.post("/camera#camera", "acquire_camera_focus")
 	msg.post("@render:", "use_camera_projection")
 
-	self.max_health = 10
+	self.base_health = 10
+	self.max_health = self.base_health
+	self.max_stamina = 100
 	self.speed = 250
 	self.score = 0
 	
@@ -98,10 +109,10 @@ function update(self, dt)
 	
 	if self.moving then
 		if self.running then 
-			self.speed = 350
+			self.speed = 350 * self.speed_multiplier
 			go.set("#sprite", "playback_rate", 1.5)
 		else
-			self.speed = 250
+			self.speed = 250 * self.speed_multiplier
 			go.set("#sprite", "playback_rate", 1)
 		end
 		
@@ -134,7 +145,7 @@ function update(self, dt)
 		local angle = math.atan2(self.dir.y, self.dir.x)
 		local rot = vmath.quat_rotation_z(angle)
 		local props = { dir = self.dir, speed_multiplier =  self.weapon_speed_multiplier,
-		damage_multiplier =  self.weapon_damage_multiplier,
+		damage_multiplier =  self.weapon_damage_multiplier * self.damage_multiplier,
 		life_multiplier =  self.weapon_life_multiplier}
 		
 		factory.create("#weapon_factory", nil, rot, props)
