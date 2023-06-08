@@ -65,7 +65,6 @@ function on_message(self, message_id, message, sender)
 
 	-- stamina
 	if message_id == hash("update_stamina") then
-		print("stam: " .. message.amount .. message.total)
 		update_stamina_bar(self, message.amount, message.total)
 	end
 

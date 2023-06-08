@@ -145,6 +145,7 @@ function update(self, dt)
 		pos = pos + self.dir * self.speed * dt
 		go.set_position(pos)
 	else
+		update_stamina(self, dt*15)
 		go.set("#sprite", "playback_rate", 0)
 	end
 

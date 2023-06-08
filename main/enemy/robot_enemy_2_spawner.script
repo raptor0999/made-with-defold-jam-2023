@@ -1,5 +1,11 @@
-local function spawn(self)
+local function select_spawn_position(self)
 	local lx,ly = window.get_size()
+
+	return self.position
+end
+
+local function spawn(self)
+	local spawn_pos = select_spawn_position(self)
 	
 	local angle = math.atan2(self.dir.y, self.dir.x)
 	local rot = vmath.quat_rotation_z(angle)

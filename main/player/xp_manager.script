@@ -1,13 +1,9 @@
-
-
-
 function init(self)
 	-- player starts the game at level 1
 	self.currentLevel = 1 --holds current player level
 	self.currentXp = 0--current player xp, gets reset to 0 at every level up
 	self.xpNeeded = 1000--xp needed to reach next level
 	self.xpMultiplier = 1.5--at each level up, xpNeeded is multiplied by this number
-
 end
 
 function Level_up(self)
@@ -17,7 +13,6 @@ function Level_up(self)
 
 	--tell the gui to update level label
 	msg.post("/guis#hud", "update_level", {level = self.currentLevel} )
-
 end
 
 function on_message(self, message_id, message, sender)
@@ -36,7 +31,6 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("player_update_stamina") then
-		print("stam: " .. message.amount .. message.total)
 		msg.post("/guis#hud", "update_stamina", { amount = message.amount, total = message.total })
 	end
 	
